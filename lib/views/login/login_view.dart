@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/login_controller.dart';
 import '../home/home_view.dart';
+import '../register/register_view.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({super.key});
@@ -68,6 +69,16 @@ class LoginView extends StatelessWidget {
                       child: const Text('Login'),
                     ),
                   ),
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterView()),
+                );
+              },
+              child: const Text('Belum punya akun? Register'),
+            ),
           ],
         ),
       ),

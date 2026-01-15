@@ -3,6 +3,9 @@ class UserModel {
   final String username;
   final String email;
 
+  // simulasi database
+  static List<UserModel> registeredUsers = [];
+
   // constructor
   UserModel({required this.id, required this.username, required this.email});
 

@@ -13,8 +13,22 @@ class LoginController extends ChangeNotifier {
     // simulasi delay seperti request API
     await Future.delayed(const Duration(seconds: 2));
 
+    // trim input
+    username = username.trim();
+    email = email.trim();
+
     // validasi email harus berakhir dengan @student.uisi.ac.id
     if (!email.endsWith('@student.uisi.ac.id')) {
+      isLoading = false;
+      notifyListeners();
+      return false;
+    }
+
+    // cek apakah user terdaftar
+    bool userExists = UserModel.registeredUsers.any(
+      (user) => user.username == username && user.email == email,
+    );
+    if (!userExists) {
       isLoading = false;
       notifyListeners();
       return false;
