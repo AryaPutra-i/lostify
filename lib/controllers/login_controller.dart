@@ -13,13 +13,16 @@ class LoginController extends ChangeNotifier {
     // simulasi delay seperti request API
     await Future.delayed(const Duration(seconds: 2));
 
+    // validasi email harus berakhir dengan @student.uisi.ac.id
+    if (!email.endsWith('@student.uisi.ac.id')) {
+      isLoading = false;
+      notifyListeners();
+      return false;
+    }
+
     // logika sederhana (sementara)
     if (username.isNotEmpty && email.isNotEmpty) {
-      user = UserModel(
-        id: 1,
-        username: username,
-        email: email,
-      );
+      user = UserModel(id: 1, username: username, email: email);
 
       isLoading = false;
       notifyListeners();

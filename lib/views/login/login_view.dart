@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../controllers/login_controller.dart';
+import '../../controllers/login_controller.dart';
+import '../home/home_view.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({super.key});
@@ -13,10 +14,7 @@ class LoginView extends StatelessWidget {
     final controller = Provider.of<LoginController>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Login'), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -33,7 +31,8 @@ class LoginView extends StatelessWidget {
             TextField(
               controller: emailController,
               decoration: const InputDecoration(
-                labelText: 'Email',
+                labelText: 'Email (@student.uisi.ac.id)',
+                hintText: 'Masukkan email dengan format @student.uisi.ac.id',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -52,15 +51,17 @@ class LoginView extends StatelessWidget {
 
                         if (success) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Login berhasil'),
+                            const SnackBar(content: Text('Login berhasil')),
+                          );
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomeView(),
                             ),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Login gagal'),
-                            ),
+                            const SnackBar(content: Text('Login gagal')),
                           );
                         }
                       },

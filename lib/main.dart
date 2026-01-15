@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'controllers/login_controller.dart';
-import 'views/login_view.dart';
+import 'views/login/login_view.dart';
 
 void main() {
   runApp(
