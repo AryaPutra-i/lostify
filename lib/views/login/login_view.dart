@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/login_controller.dart';
-import '../home/home_view.dart';
+
 import '../register/register_view.dart';
+import '../main_screen.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -447,7 +448,7 @@ class _LoginViewState extends State<LoginView>
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const HomeView(),
+                                  builder: (context) => const MainScreen(),
                                 ),
                               );
                             } else {
