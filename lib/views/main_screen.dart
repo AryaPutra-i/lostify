@@ -13,12 +13,25 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
-  // Daftar halaman untuk setiap tab
-  final List<Widget> _pages = [
-    const BerandaView(), // Halaman Beranda
-    const LaporanView(), // Halaman Laporan
-    const ProfilView(),   // Halaman Profil
-  ];
+  // Method untuk menentukan halaman yang ditampilkan berdasarkan index
+  Widget _buildPage(int index) {
+    switch (index) {
+      case 0:
+        return const BerandaView();
+      case 1:
+        return LaporanView(
+          onBack: () {
+            setState(() {
+              _selectedIndex = 0; // Kembali ke Beranda
+            });
+          },
+        );
+      case 2:
+        return const ProfilView();
+      default:
+        return const BerandaView();
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -29,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_selectedIndex],
+      body: _buildPage(_selectedIndex),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           boxShadow: [

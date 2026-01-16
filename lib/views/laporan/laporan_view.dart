@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class LaporanView extends StatefulWidget {
-  const LaporanView({super.key});
+  final VoidCallback? onBack; // Parameter callback untuk kembali
+
+  const LaporanView({super.key, this.onBack});
 
   @override
   State<LaporanView> createState() => _LaporanViewState();
@@ -39,13 +41,12 @@ class _LaporanViewState extends State<LaporanView> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
-            // Jika dipush dari MainScreen, ini mungkin tidak bisa pop.
-            // Kita perlu cek:
-            if (Navigator.canPop(context)) {
+            // Jika ada fungsi onBack (dari MainScreen), jalankan
+            if (widget.onBack != null) {
+              widget.onBack!();
+            } else if (Navigator.canPop(context)) {
+              // Fallback jika halaman ini di-push biasa
               Navigator.pop(context);
-            } else {
-              // Jika ini bagian dari BottomNav, mungkin kita switch ke tab Home
-              // Tapi secara UX di desain, sepertinya ini halaman terpisah.
             }
           },
         ),
