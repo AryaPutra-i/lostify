@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lostify_app/views/pickup/pickup_view.dart';
 import 'package:provider/provider.dart';
 
 import 'controllers/login_controller.dart';
@@ -18,6 +19,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: LoginView());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: pickupView());
   }
 }
