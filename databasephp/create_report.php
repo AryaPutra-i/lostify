@@ -1,9 +1,7 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type");
+include "database.php";
 header("Content-Type: application/json");
 
-include "database.php";
 
 // Check if request is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

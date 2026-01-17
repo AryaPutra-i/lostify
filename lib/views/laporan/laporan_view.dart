@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -19,7 +20,7 @@ class _LaporanViewState extends State<LaporanView> {
   final TextEditingController _descController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
   
-  File? _imageFile;
+  XFile? _imageFile;
   final ImagePicker _picker = ImagePicker();
   bool _isLoading = false;
 
@@ -47,7 +48,7 @@ class _LaporanViewState extends State<LaporanView> {
       
       if (pickedFile != null) {
         setState(() {
-          _imageFile = File(pickedFile.path);
+          _imageFile = pickedFile;
         });
       }
     } catch (e) {
@@ -107,9 +108,16 @@ class _LaporanViewState extends State<LaporanView> {
         throw Exception('User belum login');
       }
 
-      // Pastikan URL sesuai dengan environment (localhost/10.0.2.2)
-      // Sesuaikan path jika folder databasephp berbeda
-      var uri = Uri.parse('http://localhost/lostify/databasephp/create_report.php'); 
+      // Tentukan URL berdasarkan platform
+      // Gunakan 127.0.0.1 untuk Web/Desktop Windows karena localhost bisa bermasalah dengan IPv6
+      String baseUrl = 'http://127.0.0.1/lostify/databasephp/create_report.php';
+      
+      // Gunakan 10.0.2.2 jika di Android Emulator
+      if (!kIsWeb && Platform.isAndroid) {
+        baseUrl = 'http://10.0.2.2/lostify/databasephp/create_report.php';
+      }
+
+      var uri = Uri.parse(baseUrl); 
       
       var request = http.MultipartRequest('POST', uri);
       
@@ -121,10 +129,21 @@ class _LaporanViewState extends State<LaporanView> {
       request.fields['status'] = _selectedCategory == 'Barang Hilang' ? 'Hilang' : 'Ditemukan';
 
       if (_imageFile != null) {
-        request.files.add(await http.MultipartFile.fromPath(
-          'photo',
-          _imageFile!.path,
-        ));
+        if (kIsWeb) {
+            // Untuk Web: Kirim bytes
+            var bytes = await _imageFile!.readAsBytes();
+            request.files.add(http.MultipartFile.fromBytes(
+              'photo', 
+              bytes,
+              filename: _imageFile!.name
+            ));
+        } else {
+            // Untuk Mobile/Desktop: Kirim file path
+            request.files.add(await http.MultipartFile.fromPath(
+              'photo',
+              _imageFile!.path,
+            ));
+        }
       }
 
       var response = await request.send();
@@ -146,6 +165,7 @@ class _LaporanViewState extends State<LaporanView> {
             // Optional: navigate back
             if (widget.onBack != null) widget.onBack!();
         } else {
+           print('PHP Error: $respStr'); // Debug log
            ScaffoldMessenger.of(context).showSnackBar(
              SnackBar(content: Text('Gagal mengirim laporan: $respStr')),
            );
@@ -213,7 +233,9 @@ class _LaporanViewState extends State<LaporanView> {
                     ),
                     image: _imageFile != null 
                       ? DecorationImage(
-                          image: FileImage(_imageFile!),
+                          image: kIsWeb 
+                              ? NetworkImage(_imageFile!.path) 
+                              : FileImage(File(_imageFile!.path)) as ImageProvider,
                           fit: BoxFit.cover,
                         )
                       : null,
