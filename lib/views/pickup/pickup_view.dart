@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lostify_app/customTextField.dart';
+import 'package:lostify_app/views/cutomButton.dart';
 
 class pickupView extends StatefulWidget {
   const pickupView({super.key});
@@ -8,6 +10,10 @@ class pickupView extends StatefulWidget {
 }
 
 class _pickupViewState extends State<pickupView> {
+  final TextEditingController _namaPengambil = TextEditingController();
+  final TextEditingController _nomorPengambil = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,22 +57,18 @@ class _pickupViewState extends State<pickupView> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF1E3A8A),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: const Icon(
-                          Icons.camera_alt_rounded,
-                          color: Colors.white,
-                          size: 40,
-                        ),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1E3A8A),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: const Icon(
+                        Icons.camera_alt_rounded,
+                        color: Colors.white,
+                        size: 40,
                       ),
                     ),
-
                     const SizedBox(height: 10),
                     Text(
                       'Upload Foto Bukti pengambilan',
@@ -80,8 +82,29 @@ class _pickupViewState extends State<pickupView> {
                 ),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
+            CustomButton(text: 'Upload', onPressed: (){}, color: const Color(0xFF1E3A8A), height: 30, icon: Icons.upload_sharp),
+            const SizedBox(height: 15),
+            Customtextfield(
+              controller: _namaPengambil, 
+              label: 'Nama Pengambil',
+              hint: 'Alfredo elpendeho',
+              prefixIcon: Icons.person,
+            
+            ),
+            const SizedBox(height: 15),
 
+            Customtextfield(
+              controller: _nomorPengambil,
+              label: 'Nomor Pengambil',
+              hint: '08912345678',
+              prefixIcon: Icons.phone,
+            ),
+
+            const SizedBox(height: 15),
+            CustomButton(text: 'Submit', onPressed: (){}, color: const Color(0xFF1E3A8A), height: 30),
+
+            
           ],
         ),
       ),
