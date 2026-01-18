@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lostify_app/Detail_laporan/detail_laporan.dart';
+import 'package:lostify_app/views/Detail_laporan/detail_laporan.dart';
 import 'package:lostify_app/views/pickup/pickup_view.dart';
 import 'package:provider/provider.dart';
 
