@@ -57,7 +57,8 @@ class AuthService {
       print('Login error: $e');
       return {
         'success': false,
-        'message': 'Error: Tidak dapat terhubung ke server. Pastikan server PHP berjalan.',
+        // 'message': 'Error: Tidak dapat terhubung ke server. Pastikan server PHP berjalan.',
+        'message': '$e',
       };
     }
   }
