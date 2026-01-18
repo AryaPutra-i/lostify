@@ -110,11 +110,11 @@ class _LaporanViewState extends State<LaporanView> {
 
       // Tentukan URL berdasarkan platform
       // Gunakan 127.0.0.1 untuk Web/Desktop Windows karena localhost bisa bermasalah dengan IPv6
-      String baseUrl = 'http://127.0.0.1/lostify/databasephp/create_report.php';
+      String baseUrl = 'http://10.10.10.107/lostify/databasephp/create_report.php';
       
       // Gunakan 10.0.2.2 jika di Android Emulator
       if (!kIsWeb && Platform.isAndroid) {
-        baseUrl = 'http://10.0.2.2/lostify/databasephp/create_report.php';
+        baseUrl = 'http://10.10.10.107/lostify/databasephp/create_report.php';
       }
 
       var uri = Uri.parse(baseUrl); 
@@ -217,57 +217,108 @@ class _LaporanViewState extends State<LaporanView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Area Upload Foto
-            GestureDetector(
-              onTap: _showImagePickerModal,
-              child: Center(
-                child: Container(
-                  width: double.infinity,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF3F4F6),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: Colors.grey.withOpacity(0.3),
-                      style: BorderStyle.solid,
-                      width: 1.5,
-                    ),
-                    image: _imageFile != null 
-                      ? DecorationImage(
-                          image: kIsWeb 
-                              ? NetworkImage(_imageFile!.path) 
-                              : FileImage(File(_imageFile!.path)) as ImageProvider,
-                          fit: BoxFit.cover,
-                        )
-                      : null,
+            // Area Upload Foto
+            Center(
+              child: Container(
+                width: double.infinity,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF3F4F6),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: Colors.grey.withOpacity(0.3),
+                    style: BorderStyle.solid,
+                    width: 1.5,
                   ),
-                  child: _imageFile == null 
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF1E3A8A),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: const Icon(
-                              Icons.camera_alt_rounded,
-                              color: Colors.white,
-                              size: 40,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            'Tambah Foto',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
+                  image: _imageFile != null 
+                    ? DecorationImage(
+                        image: kIsWeb 
+                            ? NetworkImage(_imageFile!.path) 
+                            : FileImage(File(_imageFile!.path)) as ImageProvider,
+                        fit: BoxFit.cover,
                       )
-                    : null, // Kosongkan child jika ada image, gunakan DecorationImage
+                    : null,
                 ),
+                child: _imageFile == null 
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Upload Foto Barang',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // Tombol Kamera
+                            InkWell(
+                              onTap: () => _pickImage(ImageSource.camera),
+                              child: Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF1E3A8A),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Column(
+                                  children: const [
+                                    Icon(Icons.camera_alt_rounded, color: Colors.white, size: 30),
+                                    SizedBox(height: 4),
+                                    Text('Kamera', style: TextStyle(color: Colors.white, fontSize: 12)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            // Tombol Galeri
+                            InkWell(
+                              onTap: () => _pickImage(ImageSource.gallery),
+                              child: Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(color: const Color(0xFF1E3A8A)),
+                                ),
+                                child: Column(
+                                  children: const [
+                                    Icon(Icons.photo_library_rounded, color: Color(0xFF1E3A8A), size: 30),
+                                    SizedBox(height: 4),
+                                    Text('Galeri', style: TextStyle(color: Color(0xFF1E3A8A), fontSize: 12)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  : Stack(
+                      children: [
+                        Positioned(
+                          top: 10,
+                          right: 10,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _imageFile = null;
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
+                                color: Colors.red,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(Icons.close, color: Colors.white, size: 20),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
               ),
             ),
             
