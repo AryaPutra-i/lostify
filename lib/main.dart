@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lostify_app/Detail_laporan/detail_laporan.dart';
 import 'package:lostify_app/views/pickup/pickup_view.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: pickupView());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: datailLaporan());
   }
 }

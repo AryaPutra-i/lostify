@@ -9,7 +9,7 @@ class AuthService {
   // Untuk emulator Android: http://10.0.2.2/lostify/databasephp
   // Untuk device fisik: gunakan IP komputer Anda
   // Menggunakan port 8000 yang baru saja kita jalankan
-  static const String baseUrl = 'http://localhost/lostify/';
+  static const String baseUrl = 'http://192.168.1.8/lostify/databasephp';
   
   // Singleton pattern
   static final AuthService _instance = AuthService._internal();

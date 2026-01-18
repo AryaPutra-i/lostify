@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lostify_app/customTextField.dart';
-import 'package:lostify_app/views/cutomButton.dart';
+import 'package:lostify_app/cutomButton.dart';
 
 class pickupView extends StatefulWidget {
   const pickupView({super.key});
