@@ -53,9 +53,9 @@ class _datailLaporanState extends State<datailLaporan> {
               const SizedBox(height: 10),
               // untuk menampilkan data laporan bisa mengganti value dengan variable dari database
               Customdatafield(label: 'Nama Barang', value: 'Dompet Adidas', icon: Icons.work, fontsize: 16.0),  
-              Customdatafield(label: 'Deskripsi', value: 'Dompet Adidas berwarna hitam dan isinya terdapat kartu atm ktp sim', icon: Icons.description, fontsize: 12.0),
-              Customdatafield(label: 'Jenis Laporan', value: 'Ditemukan', icon: Icons.description, fontsize: 12.0),
-              Customdatafield(label: 'Lokasi Kejadian', value: 'CM202', icon: Icons.description, fontsize: 12.0),
+              Customdatafield(label: 'Deskripsi', value: 'Dompet Adidas berwarna hitam dan isinya terdapat kartu atm ktp sim', icon: Icons.description, fontsize: 16.0),
+              Customdatafield(label: 'Jenis Laporan', value: 'Ditemukan', icon: Icons.description, fontsize: 16.0),
+              Customdatafield(label: 'Lokasi Kejadian', value: 'CM202', icon: Icons.description, fontsize: 16.0),
                 
               
             ],
